@@ -7,20 +7,28 @@ import Layout from "../layout/Layout";
 const CountryDetails = () => {
   const { code } = useParams();
   const [countryData, setCountryData] = useState(null);
+  const [isLoading, setIsLoading] = useState(true);
   const navigate = useNavigate();
 
   useEffect(() => {
-    axios.get(`https://restcountries.com/v3.1/alpha/${code}`).then((res) => {
-      console.log("==>country by code", res.data);
-      if (res.data) {
-        setCountryData(res.data[0]);
-      }
-    });
+    axios
+      .get(`https://restcountries.com/v3.1/alpha/${code}`)
+      .then((res) => {
+        console.log("==>country by code", res.data);
+        if (res.data) {
+          setCountryData(res.data[0]);
+          setIsLoading(false);
+        }
+      })
+      .catch((err) => {
+        console.log(err.message);
+        setIsLoading(false);
+      });
   }, []);
 
   return (
     <Layout>
-      <div className="back_btn" onClick={()=>navigate(-1)}>
+      <div className="back_btn" onClick={() => navigate(-1)}>
         <svg
           xmlns="http://www.w3.org/2000/svg"
           width="16"
@@ -36,63 +44,68 @@ const CountryDetails = () => {
         </svg>
         Back
       </div>
-      <div className="country_container">
-        <div className="country_image_container">
-          <img
-            className="country_image"
-            src={countryData ? countryData.flags.png : ""}
-            alt=""
-          />
-        </div>
-        <div className="country_details">
-          <div className="country_name_detail">
-            {countryData?.name?.official}
+      {isLoading ? (
+        <div className="text-center mt-5"><h4>Loading Country Details...</h4></div>
+      ) : (
+        <div className="country_container">
+          <div className="country_image_container">
+            <img
+              className="country_image"
+              src={countryData ? countryData.flags.png : ""}
+              alt=""
+            />
           </div>
-          <div className="detail_container">
-            <div className="detail_left">
-              <div>
-                <strong>Native Name: </strong>
-                {countryData?.name?.nativeName?.ron?.official}
+          <div className="country_details">
+            <div className="country_name_detail">
+              {countryData?.name?.official}
+            </div>
+            <div className="detail_container">
+              <div className="detail_left">
+                <div>
+                  <strong>Native Name: </strong>
+                  {countryData?.name?.nativeName?.ron?.official}
+                </div>
+                <div>
+                  <strong>Population: </strong>
+                  {countryData?.population}
+                </div>
+                <div>
+                  <strong>Region: </strong>
+                  {countryData?.region}
+                </div>
+                <div>
+                  <strong>Sub Region: </strong> {countryData?.subregion}
+                </div>
+                <div>
+                  <strong>Capital: </strong> {countryData?.capital[0]}
+                </div>
               </div>
-              <div>
-                <strong>Population: </strong>
-                {countryData?.population}
-              </div>
-              <div>
-                <strong>Region: </strong>
-                {countryData?.region}
-              </div>
-              <div>
-                <strong>Sub Region: </strong> {countryData?.subregion}
-              </div>
-              <div>
-                <strong>Capital: </strong> {countryData?.capital[0]}
+              <div className="detail_right">
+                <div>
+                  <strong>Top level Domain:</strong> {countryData?.tld[0]}
+                </div>
+                <div>
+                  <strong>Currencies: </strong>
+                  {/* {countryData?.currencies?.MDL?.name} */}
+                  {/* TODO: currencies key is different for all */}
+                  {JSON.stringify(countryData?.currencies)}
+                </div>
+                <div>
+                  <strong>Languages: </strong>
+                  {/* TODO: language key is different for all */}
+                  {JSON.stringify(countryData?.languages)}
+                </div>
               </div>
             </div>
-            <div className="detail_right">
-              <div>
-                <strong>Top level Domain:</strong> {countryData?.tld[0]}
-              </div>
-              <div>
-                <strong>Currencies: </strong>
-                {/* {countryData?.currencies?.MDL?.name} */}
-                {/* TODO: currencies key is different for all */}
-                {JSON.stringify(countryData?.currencies)}
-              </div>
-              <div>
-                <strong>Languages: </strong>
-                {/* TODO: language key is different for all */}
-                {JSON.stringify(countryData?.languages)}
-              </div>
+            <div className="border_countries">
+              Border Countries:
+              {countryData?.borders?.map((data) => (
+                <button className="btn btn-light disabled mx-2"> {data}</button>
+              ))}
             </div>
           </div>
-          <div className="border_countries">Border Countries:  
-          {countryData?.borders?.map((data)=>(
-            <button className="btn btn-light disabled mx-2"> {data}</button>
-          ))}
-          </div>
         </div>
-      </div>
+      )}
     </Layout>
   );
 };
