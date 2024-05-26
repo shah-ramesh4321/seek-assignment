@@ -9,6 +9,7 @@ const Home = () => {
   const [countryList, setCountryList] = useState<countryListProps[]>([]);
   const [regionList, setRegionList] = useState<string[]>([]);
   const [originalList, setOriginalList] = useState<countryListProps[]>([]);
+  const [selectedRegion, setSelectedRegion] = useState<string>("");
   const [isLoading, setIsLoading] = useState<boolean>(true);
 
   useEffect(() => {
@@ -40,7 +41,7 @@ const Home = () => {
   //Region Change Filter handler
   const handleRegionChange = (e: ChangeEvent<HTMLSelectElement>) => {
     const selectedValue = e.target.value;
-
+    setSelectedRegion(selectedValue);
     if (selectedValue !== "") {
       const filteredCountries = originalList.filter(
         (country) => country.region === selectedValue
@@ -56,9 +57,13 @@ const Home = () => {
   const handleCountrySearch = (e: ChangeEvent<HTMLInputElement>) => {
     console.log(e.target.value);
     const searchInput = e.target.value;
-    const result = originalList.filter((country) =>
-      country.name.common.toLowerCase().includes(searchInput.toLowerCase())
-    );
+    const result = selectedRegion
+      ? originalList.filter((country) =>
+          country.name.common.toLowerCase().includes(searchInput.toLowerCase()) && country.region ===selectedRegion
+        )
+      : originalList.filter((country) =>
+          country.name.common.toLowerCase().includes(searchInput.toLowerCase())
+        );
     setCountryList(result);
   };
 
