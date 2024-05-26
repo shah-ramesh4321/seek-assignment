@@ -5,7 +5,7 @@ import { ChangeEvent } from "react";
 interface FilterProps {
   regionList: string[];
   handleCountrySearch: (e: ChangeEvent<HTMLInputElement>) => void;
-  handleRegionChange: (e: ChangeEvent<HTMLInputElement>) => void;
+  handleRegionChange: (e: ChangeEvent<HTMLSelectElement>) => void;
 }
 
 const Filter: React.FC<FilterProps> = ({
