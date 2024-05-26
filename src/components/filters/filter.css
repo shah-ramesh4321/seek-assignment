@@ -1,0 +1,25 @@
+.filter{
+    display: flex;
+    justify-content: space-between;
+}
+
+.filter_country {
+    width: 480px; 
+}
+.filter_region {
+    width: 200px; 
+}
+
+.form-control.custom-placeholder::placeholder {
+    color:var(--text-primary); 
+  }
+
+@media screen and (max-width: 768px) {
+    .filter{
+        flex-direction: column;
+    }
+    .filter_country {
+        width: 100%; 
+        margin-bottom: 10px;
+    }
+}

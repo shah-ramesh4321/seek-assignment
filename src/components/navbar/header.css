@@ -1,0 +1,20 @@
+.header{
+    height: 80px;
+    background-color: var(--bg-navbar);
+    padding: 0 5%;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    box-shadow: 0 4px 2px -2px rgba(0, 0, 0, 0.2);
+}
+
+.header_title{
+    font-size: 24px;
+    font-weight: 800;
+}
+
+@media screen and (max-width: 768px) {
+    .header_title{
+        font-size: 16px;
+    }
+}

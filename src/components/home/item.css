@@ -1,0 +1,20 @@
+.item {
+  background-color: var(--bg-card-color);
+  width: 264px;
+  height: 336px;
+  border-radius: 5px;
+  border: 1px solid transparent;
+  transition: transform 0.3s ease-in-out;
+  margin-bottom: 20px;
+}
+
+.item:hover{
+    cursor: pointer;
+    transform: translateY(-5px);
+}
+
+.country_name{
+    font-size: 18px;
+    font-weight: 800;
+    padding: 20px 0;
+}
