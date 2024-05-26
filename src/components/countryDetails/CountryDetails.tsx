@@ -76,10 +76,12 @@ const CountryDetails = () => {
               <div>
                 <strong>Currencies: </strong>
                 {/* {countryData?.currencies?.MDL?.name} */}
+                {/* TODO: currencies key is different for all */}
                 {JSON.stringify(countryData?.currencies)}
               </div>
               <div>
                 <strong>Languages: </strong>
+                {/* TODO: language key is different for all */}
                 {JSON.stringify(countryData?.languages)}
               </div>
             </div>
